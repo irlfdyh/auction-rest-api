@@ -13,6 +13,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'v1'], function(){
+
+    // Masyarakat
+    Route::resource('masyarakat', 'MasyarakatController', [
+        // karena tidak membutuhkan tampilan create dan edit tidak dibutuhkan
+        'except' => ['create', 'edit']
+    ]);
+
+    // Petugas
+    Route::resource('petugas', 'PetugasController', [
+        'except' => ['create', 'edit']
+    ]);
+
+    // Barang
+    Route::resource('barang', 'BarangController', [
+        'except' => ['create', 'edit']
+    ]);
 });
