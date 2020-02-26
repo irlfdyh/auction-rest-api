@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMasyarakatModelsTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateMasyarakatModelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('masyarakat_models', function (Blueprint $table) {
-            $table->bigIncrements('id_user');
-            $table->string('name');
-            $table->string('username');
-            $table->string('password');
-            $table->string('phone');
+        Schema::create('categories', function (Blueprint $table) {
+            $table->bigIncrements('category_id');
+            $table->string('category_name');
+            $table->text('category_description');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateMasyarakatModelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('masyarakat_models');
+        Schema::dropIfExists('categories');
     }
 }

@@ -15,19 +15,24 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'v1'], function(){
 
-    // Masyarakat
-    Route::resource('masyarakat', 'MasyarakatController', [
-        // karena tidak membutuhkan tampilan create dan edit tidak dibutuhkan
-        'except' => ['create', 'edit']
-    ]);
+    // // User CRUD operation
+    // Route::resource('user', 'MasyarakatController', [
+    //     // 'create' and 'edit' isn't need.
+    //     'except' => ['create', 'edit']
+    // ]);
 
-    // Petugas
-    Route::resource('petugas', 'PetugasController', [
-        'except' => ['create', 'edit']
-    ]);
+    // // Officier/Administrator CRUD operation
+    // Route::resource('officier', 'PetugasController', [
+    //     'except' => ['create', 'edit']
+    // ]);
 
-    // Barang
-    Route::resource('barang', 'BarangController', [
+    // // Stuff CRUD operation
+    // Route::resource('stuff', 'BarangController', [
+    //     'except' => ['create', 'edit']
+    // ]);
+
+    // Category CRUD operation
+    Route::resource('category', 'CategoryController', [
         'except' => ['create', 'edit']
     ]);
 });
