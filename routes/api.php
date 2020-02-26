@@ -26,10 +26,10 @@ Route::group(['prefix' => 'v1'], function(){
     //     'except' => ['create', 'edit']
     // ]);
 
-    // // Stuff CRUD operation
-    // Route::resource('stuff', 'BarangController', [
-    //     'except' => ['create', 'edit']
-    // ]);
+    // Stuff CRUD operation
+    Route::resource('stuff', 'StuffController', [
+        'except' => ['create', 'edit']
+    ]);
 
     // Category CRUD operation
     Route::resource('category', 'CategoryController', [

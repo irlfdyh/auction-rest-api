@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\BarangModel;
+use App\Stuff;
 use Illuminate\Http\Request;
 
-class BarangController extends Controller
+class StuffController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,10 +15,10 @@ class BarangController extends Controller
     public function index()
     {
         // get all stuff data
-        $stuff = BarangModel::all();
+        $stuff = Stuff::all();
 
         $response = [
-            'message' => 'List of all stuff data',
+            'message' => 'All Stuff Data',
             'stuff' => $stuff
         ];
 
@@ -35,25 +35,29 @@ class BarangController extends Controller
     {
         // data validation
         $this->validate($request, [
-            'nama_barang' => 'required',
-            'harga_awal' => 'required',
-            'deskripsi_barang' => 'required'
+            'stuff_name' => 'required',
+            'started_price' => 'required',
+            'description' => 'required',
+            'date' => 'required'
         ]);
 
-        $categoryId = $request->input('id_kategori');
-        $name = $request->input('nama_barang');
-        $date = $request->input('tgl');
-        $price = $request->input('harga_awal');
-        $description = $request->input('deskripsi_barang');
+        // get data input
+        $categoryId = $request->category_id;
+        $name = $request->stuff_name;
+        $price = $request->started_price;
+        $description = $request->description;
+        $date = $request->date;
 
-        $stuff = new BarangModel([
-            'nama_barang' => $name,
-            'id_kategori' => $categoryId,
-            'tgl' => $date,
-            'harga_awal' => $price,
-            'deskripsi_barang' => $description
+        // create new stuff object for gave data was created before
+        $stuff = new Stuff([
+            'category_id' => $categoryId,
+            'stuff_name' => $name,
+            'started_price' => $price,
+            'description' => $description,
+            'date' => $date
         ]);
 
+        // returning response when data is succesfully created
         if ($stuff->save()) {
             $message = [
                 'message' => 'Data Created',
@@ -73,21 +77,10 @@ class BarangController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\BarangModel  $barangModel
+     * @param  \App\Stuff  $stuff
      * @return \Illuminate\Http\Response
      */
-    public function show(BarangModel $barangModel)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\BarangModel  $barangModel
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(BarangModel $barangModel)
+    public function show(Stuff $stuff)
     {
         //
     }
@@ -96,22 +89,81 @@ class BarangController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BarangModel  $barangModel
+     * @param  \App\Stuff  $stuff
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, BarangModel $barangModel)
+    public function update(Request $request, Stuff $stuff)
     {
-        //
+        // data validation
+        $this->validate($request, [
+            'stuff_name' => 'required',
+            'started_price' => 'required',
+            'description' => 'required',
+            'date' => 'required'
+        ]);
+
+        $stuffId = Stuff::findOrFail($stuff->stuff_id);
+
+        // get data input
+        $categoryId = $request->category_id;
+        $name = $request->stuff_name;
+        $price = $request->started_price;
+        $description = $request->description;
+        $date = $request->date;
+
+        // // create new stuff object
+        // $stuff = new Stuff([
+        //     'category_id' => $categoryId,
+        //     'stuff_name' => $name,
+        //     'started_price' => $price,
+        //     'description' => $description,
+        //     'date' => $date
+        // ]);
+
+        $stuff->update([
+            'category_id' => $categoryId,
+            'stuff_name' => $name,
+            'started_price' => $price,
+            'description' => $description,
+            'date' => $date
+        ]);
+        
+        if (!$stuff->update()) {
+            return response()->json([
+                'message' => 'Error during update data'
+            ], 404);
+        }
+
+        $response = [
+            'message' => 'Stuff data updated',
+            'stuff_data' => $stuff
+        ];
+
+        return response()->json(
+            $response, 200
+        );
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\BarangModel  $barangModel
+     * @param  \App\Stuff  $stuff
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BarangModel $barangModel)
+    public function destroy(Stuff $stuff)
     {
-        //
+        $stuffId = Stuff::findOrFail($stuff->stuff_id);
+
+        if (!$stuff->delete()) {
+            return reseponse()->json([
+                'message' => 'Data is not deleted'
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Stuff Deleted'
+        ], 200);
     }
+    
 }

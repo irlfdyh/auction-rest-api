@@ -105,7 +105,7 @@ class CategoryController extends Controller
 
         $response = [
             'message' => 'Category Updated',
-            'category data' => [
+            'category_data' => [
                 'category_name' => $categoryName,
                 'category_description' => $categoryDescription
             ]
@@ -134,6 +134,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'message' => 'Category Deleted'
-        ], 404);
+        ], 200);
     }
+    
 }
