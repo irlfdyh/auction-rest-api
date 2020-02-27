@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Officier;
+use App\Officer;
 use Illuminate\Http\Request;
 
-class OfficierController extends Controller
+class OfficerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,11 +14,11 @@ class OfficierController extends Controller
      */
     public function index()
     {
-        $officier = Officier::all();
+        $officer = Officer::all();
 
         $response = [
-            'message' => 'All Officier Data',
-            'officier' => $officier
+            'message' => 'All Officer Data',
+            'officier' => $officer
         ];
 
         return response()->json(
@@ -35,7 +35,7 @@ class OfficierController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'officier_name' => 'required',
+            'officer_name' => 'required',
             'username' => 'required',
             'password' => 'required',
             'level_id' => 'required',
@@ -43,12 +43,12 @@ class OfficierController extends Controller
         ]);
 
         $levelId = $request->level_id;
-        $name = $request->officier_name;
+        $name = $request->officer_name;
         $username = $request->username;
         $password = $request->password;
         $status = $request->status;
 
-        $officier = new Officier([
+        $officer = new Officer([
             'level_id' => $levelId,
             'officier_name' => $name,
             'username' => $username,
@@ -56,10 +56,10 @@ class OfficierController extends Controller
             'status' => $status
         ]);
 
-        if ($officier->save()) {
+        if ($officer->save()) {
             $message = [
                 'message' => 'Data Created',
-                'officier' => $officier
+                'officier' => $officer
             ];
             return response()->json(
                 $message, 201
@@ -77,18 +77,21 @@ class OfficierController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Officier  $officier
+     * @param  \App\Officer  $officer
      * @return \Illuminate\Http\Response
      */
-    public function show(Officier $officier)
+    public function show(Officer $officer)
     {
-        $officier = Officier::findOrFail($officier->officier_id);
-        $level = Officier::with('level')->where('level_id', $officier->level_id)->firstOrFail();
+        $officer = Officer::findOrFail($officer->officer_id);
+        $level = Officer::find(1);
 
         $response = [
             'message' => 'Detail Data',
-            'officier' => $officier,
-            'level_detail' => $level
+            'officer' => $officer,
+            'level_detail' => [
+                'level_id' => $level->level_id,
+                'level_name' => $level->level
+            ]
         ];
 
         return response()->json(
@@ -100,13 +103,13 @@ class OfficierController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Officier  $officier
+     * @param  \App\Officer  $officer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Officier $officier)
+    public function update(Request $request, Officer $officer)
     {
         $this->validate($request, [
-            'officier_name' => 'required',
+            'officer_name' => 'required',
             'username' => 'required',
             'password' => 'required',
             'level_id' => 'required',
@@ -114,20 +117,20 @@ class OfficierController extends Controller
         ]);
 
         $levelId = $request->level_id;
-        $name = $request->officier_name;
+        $name = $request->officer_name;
         $username = $request->username;
         $password = $request->password;
         $status = $request->status;
 
-        $officierID = Officier::findOrFail($officier->officier_id);
+        $officerID = Officer::findOrFail($officer->officer_id);
 
-        if (!$officier->update()) {
+        if (!$officer->update()) {
             return response()->json([
                 'message' => 'Error During Update Data'
             ], 404);
         }
 
-        $officier->update([
+        $officer->update([
             'level_id' => $levelId,
             'officier_name' => $name,
             'username' => $username,
@@ -137,7 +140,7 @@ class OfficierController extends Controller
 
         $successMessage = [
             'message' => 'Data Updated',
-            'officier' => $officier
+            'officier' => $officer
         ];
 
         return response()->json(

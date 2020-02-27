@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Officier extends Model
+class Officer extends Model
 {
-    protected $guarded = ['officier_id'];
-    protected $primaryKey = 'officier_id';
+    protected $guarded = ['officer_id'];
+    protected $primaryKey = 'officer_id';
     
     public function level() {
         return $this->belongsTo('App\Level');

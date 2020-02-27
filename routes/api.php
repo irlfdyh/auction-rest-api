@@ -22,7 +22,7 @@ Route::group(['prefix' => 'v1'], function(){
     ]);
 
     // Officier CRUD operation
-    Route::resource('officier', 'OfficierController', [
+    Route::resource('officer', 'OfficerController', [
         'except' => ['create', 'edit', 'destroy']
     ]);
 
@@ -34,5 +34,9 @@ Route::group(['prefix' => 'v1'], function(){
     // Category CRUD operation
     Route::resource('category', 'CategoryController', [
         'except' => ['create', 'edit']
+    ]);
+
+    Route::resource('level', 'LevelController', [
+        'only' => ['index']
     ]);
 });
