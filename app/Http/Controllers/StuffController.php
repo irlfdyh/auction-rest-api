@@ -120,15 +120,6 @@ class StuffController extends Controller
         $description = $request->description;
         $date = $request->date;
 
-        // // create new stuff object
-        // $stuff = new Stuff([
-        //     'category_id' => $categoryId,
-        //     'stuff_name' => $name,
-        //     'started_price' => $price,
-        //     'description' => $description,
-        //     'date' => $date
-        // ]);
-
         $stuff->update([
             'category_id' => $categoryId,
             'stuff_name' => $name,
@@ -162,7 +153,7 @@ class StuffController extends Controller
      */
     public function destroy(Stuff $stuff)
     {
-        //$stuffId = Stuff::findOrFail($stuff->stuff_id);
+        $stuffId = Stuff::findOrFail($stuff->stuff_id);
 
         if (!$stuff->delete()) {
             return reseponse()->json([

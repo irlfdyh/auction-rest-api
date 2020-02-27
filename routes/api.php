@@ -21,9 +21,9 @@ Route::group(['prefix' => 'v1'], function(){
         'except' => ['create', 'edit', 'destroy']
     ]);
 
-    // Officier/Administrator CRUD operation
-    Route::resource('officier', 'AdminOfficierController', [
-        'except' => ['create', 'edit']
+    // Officier CRUD operation
+    Route::resource('officier', 'OfficierController', [
+        'except' => ['create', 'edit', 'destroy']
     ]);
 
     // Stuff CRUD operation

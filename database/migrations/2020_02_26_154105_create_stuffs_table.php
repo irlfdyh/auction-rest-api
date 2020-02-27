@@ -15,12 +15,12 @@ class CreateStuffsTable extends Migration
     {
         Schema::create('stuffs', function (Blueprint $table) {
             $table->bigIncrements('stuff_id', 11);
-            $table->unsignedBigInteger('category_id', 11);
+            $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')
                 ->references('category_id')
                 ->on('categories');
             $table->string('stuff_name', 25);
-            $table->integer('started_price', 20);
+            $table->integer('started_price');
             $table->text('description');
             $table->date('date');
             $table->timestamps();
