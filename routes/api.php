@@ -21,10 +21,10 @@ Route::group(['prefix' => 'v1'], function(){
         'except' => ['create', 'edit', 'destroy']
     ]);
 
-    // // Officier/Administrator CRUD operation
-    // Route::resource('officier', 'PetugasController', [
-    //     'except' => ['create', 'edit']
-    // ]);
+    // Officier/Administrator CRUD operation
+    Route::resource('officier', 'AdminOfficierController', [
+        'except' => ['create', 'edit']
+    ]);
 
     // Stuff CRUD operation
     Route::resource('stuff', 'StuffController', [
