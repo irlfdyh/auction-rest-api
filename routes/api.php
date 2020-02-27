@@ -15,11 +15,11 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'v1'], function(){
 
-    // // User CRUD operation
-    // Route::resource('user', 'MasyarakatController', [
-    //     // 'create' and 'edit' isn't need.
-    //     'except' => ['create', 'edit']
-    // ]);
+    // User CRUD operation
+    Route::resource('user', 'UserController', [
+        // 'create', 'edit', 'delete' isn't need.
+        'except' => ['create', 'edit', 'destroy']
+    ]);
 
     // // Officier/Administrator CRUD operation
     // Route::resource('officier', 'PetugasController', [

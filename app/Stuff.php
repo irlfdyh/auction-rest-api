@@ -18,6 +18,9 @@ class Stuff extends Model
      */
     protected $primaryKey = 'stuff_id';
 
+    /**
+     * Get relation from stuff category
+     */
     public function category() {
         return $this->hasOne(Category::class);
     }

@@ -82,7 +82,16 @@ class StuffController extends Controller
      */
     public function show(Stuff $stuff)
     {
-        //
+        $stuff = Stuff::findOrFail($stuff->stuff_id);
+
+        $response = [
+            'message' => 'Detail Data',
+            'stuff' => $stuff
+        ];
+
+        return response()->json(
+            $response, 200
+        );
     }
 
     /**
@@ -153,7 +162,7 @@ class StuffController extends Controller
      */
     public function destroy(Stuff $stuff)
     {
-        $stuffId = Stuff::findOrFail($stuff->stuff_id);
+        //$stuffId = Stuff::findOrFail($stuff->stuff_id);
 
         if (!$stuff->delete()) {
             return reseponse()->json([
@@ -165,5 +174,5 @@ class StuffController extends Controller
             'message' => 'Stuff Deleted'
         ], 200);
     }
-    
+
 }
