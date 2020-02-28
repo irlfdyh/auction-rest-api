@@ -28,11 +28,11 @@ class CreateAuctionsTable extends Migration
                 ->references('officer_id')
                 ->on('officers');
 
-            // user_id foreign key    
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')
-                ->references('user_id')
-                ->on('users');
+            // society_id foreign key    
+            $table->unsignedBigInteger('society_id')->nullable();
+            $table->foreign('society_id')
+                ->references('society_id')
+                ->on('societys');
 
             $table->date('auction_date');
             $table->integer('final_price')->nullable();

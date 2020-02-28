@@ -2,11 +2,9 @@
 
 namespace App;
 
-//use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticable
+class User extends Model
 {
     protected $guarded = ['user_id'];
     protected $primaryKey = 'user_id';

@@ -17,7 +17,7 @@ class AuctionHistory extends Model
         return $this->hasOne(Stuff::class);
     }
 
-    public function users() {
-        return $this->belongsToMany(User::class);
+    public function societys() {
+        return $this->belongsToMany(Society::class);
     } 
 }

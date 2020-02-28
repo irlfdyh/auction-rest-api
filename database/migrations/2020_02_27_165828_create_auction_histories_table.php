@@ -28,11 +28,11 @@ class CreateAuctionHistoriesTable extends Migration
                 ->references('stuff_id')
                 ->on('stuffs');
 
-            // user_id foreign key
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')
-                ->references('user_id')
-                ->on('users');
+            //society_id foreign key
+            $table->unsignedBigInteger('society_id');
+            $table->foreign('society_id')
+                ->references('society_id')
+                ->on('societys');
 
             $table->integer('price_quote');
 

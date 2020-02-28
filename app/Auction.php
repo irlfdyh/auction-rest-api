@@ -10,12 +10,12 @@ class Auction extends Model
     protected $primaryKey = 'auction_id';
 
     /**
-     * the user can participate many auction and 
-     * the auction can have many user which follow
+     * the society can participate many auction and 
+     * the auction can have many society which follow
      * this auction
      */
-    public function users() {
-        return $this->belongsToMany(User::class);
+    public function societys() {
+        return $this->belongsToMany(Society::class);
     }
 
     /**

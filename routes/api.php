@@ -15,8 +15,8 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'v1'], function(){
 
-    // User CRUD operation
-    Route::resource('user', 'UserController', [
+    // Society CRUD operation
+    Route::resource('user', 'SocietyController', [
         // 'create', 'edit', 'delete' isn't need.
         'except' => ['create', 'edit', 'destroy']
     ]);
