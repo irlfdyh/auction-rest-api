@@ -15,14 +15,17 @@ class CreateOfficersTable extends Migration
     {
         Schema::create('officers', function (Blueprint $table) {
             $table->bigIncrements('officer_id', 11);
-            $table->string('officer_name', 25);
-            $table->string('username', 25)->unique();
-            $table->string('password', 25);
-            $table->enum('status', ['active', 'deactive']);
+
+            // level
             $table->unsignedBigInteger('level_id');
             $table->foreign('level_id')
                 ->references('level_id')
                 ->on('levels');
+
+            $table->string('officer_name', 25);
+            $table->string('username', 25)->unique();
+            $table->string('password');
+            $table->enum('status', ['active', 'deactive']);
             $table->timestamps();
         });
     }

@@ -50,9 +50,9 @@ class OfficerController extends Controller
 
         $officer = new Officer([
             'level_id' => $levelId,
-            'officier_name' => $name,
+            'officer_name' => $name,
             'username' => $username,
-            'password' => $password,
+            'password' => bcrypt($password),
             'status' => $status
         ]);
 
@@ -83,15 +83,14 @@ class OfficerController extends Controller
     public function show(Officer $officer)
     {
         $officer = Officer::findOrFail($officer->officer_id);
-        $level = Officer::find(1);
+        // $officer = Officer::with(['level'=>function($level){
+        //     $level->with(['entity'])->get();
+        // }])->findOrFail($officer->officer_id);
+        //$officer->level()->attach($level_id);
 
         $response = [
             'message' => 'Detail Data',
-            'officer' => $officer,
-            'level_detail' => [
-                'level_id' => $level->level_id,
-                'level_name' => $level->level
-            ]
+            'officer' => $officer
         ];
 
         return response()->json(
@@ -134,7 +133,7 @@ class OfficerController extends Controller
             'level_id' => $levelId,
             'officier_name' => $name,
             'username' => $username,
-            'password' => $password,
+            'password' => bcrypt($password),
             'status' => $status
         ]);
 

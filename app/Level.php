@@ -11,6 +11,6 @@ class Level extends Model
     protected $primaryKey = 'level_id';
 
     public function entity() {
-        return $this->hasMany('App\Officer');
+        return $this->hasMany(Officier::class);
     }
 }

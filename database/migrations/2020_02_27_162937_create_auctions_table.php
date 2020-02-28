@@ -22,20 +22,20 @@ class CreateAuctionsTable extends Migration
                 ->references('stuff_id')
                 ->on('stuffs');
 
-            // user_id foreign key    
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')
-                ->references('user_id')
-                ->on('users');
-
             // officier_id foreign key
             $table->unsignedBigInteger('officer_id');
             $table->foreign('officer_id')
                 ->references('officer_id')
                 ->on('officers');
 
+            // user_id foreign key    
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')
+                ->references('user_id')
+                ->on('users');
+
             $table->date('auction_date');
-            $table->integer('final_price');
+            $table->integer('final_price')->nullable();
             $table->enum('status', ['open', 'close']);
             $table->timestamps();
         });

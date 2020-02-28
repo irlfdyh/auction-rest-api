@@ -10,7 +10,7 @@ class Officer extends Model
     protected $primaryKey = 'officer_id';
     
     public function level() {
-        return $this->belongsTo('App\Level');
+        return $this->belongsTo(Level::class);
     }
 
     public function auction() {
