@@ -82,7 +82,7 @@ class StuffController extends Controller
      */
     public function show(Stuff $stuff)
     {
-        $stuff = Stuff::findOrFail($stuff->stuff_id);
+        $stuff = Stuff::with(['category'])->findOrFail($stuff->stuff_id);
 
         $response = [
             'message' => 'Detail Data',

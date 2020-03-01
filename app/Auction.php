@@ -23,7 +23,7 @@ class Auction extends Model
      * one stuff
      */
     public function stuff() {
-        return $this->hasOne(Stuff::class);
+        return $this->hasOne(Stuff::class, 'stuff_id');
     }
 
     /**
@@ -31,5 +31,12 @@ class Auction extends Model
      */
     public function officer() {
         return $this->hasOne(Officer::class);
+    }
+
+    /**
+     * the auction can have many bidders
+     */
+    public function bidders() {
+        return $this->hasMany(Bidders::class, 'auction_id');
     }
 }

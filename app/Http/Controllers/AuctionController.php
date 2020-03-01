@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Auction;
+use App\Stuff;
 use Illuminate\Http\Request;
 
 class AuctionController extends Controller
@@ -45,17 +46,19 @@ class AuctionController extends Controller
 
         $stuffId = $request->stuff_id;
         $officerId = $request->officer_id;
-        $userId = $request->user_id;
+        $userId = $request->society_id;
         $auctionDate = $request->auction_date;
-        $finalPrice = $request->final_price;
+        $currentPrice = $request->current_price;
         $status = $request->status;
+
+        $currentPrice = Stuff::find($stuffId)->started_price;
 
         $auction = new Auction([
             'stuff_id' => $stuffId,
             'officer_id' => $officerId,
-            'user_id' => $userId,
+            'society_id' => $userId,
             'auction_date' => $auctionDate,
-            'final_price' => $finalPrice,
+            'current_price' => $currentPrice,
             'status' => $status
         ]);
 
@@ -87,7 +90,15 @@ class AuctionController extends Controller
      */
     public function show(Auction $auction)
     {
-        //
+        $auction = Auction::with(['stuff', 'bidders'])->findOrFail($auction->auction_id);
+        $response = [
+            'message' => 'Detail Data',
+            'auction' => $auction
+        ];
+
+        return response()->json(
+            $response, 200
+        );
     }
 
     /**

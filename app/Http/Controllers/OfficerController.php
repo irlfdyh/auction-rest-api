@@ -84,11 +84,9 @@ class OfficerController extends Controller
      */
     public function show(Officer $officer)
     {
-        $officer = Officer::with(['level'])->findOrFail($officer->officer_id);
-        // $officer = Officer::with(['level'=>function($level){
-        //     $level->with(['entity'])->get();
-        // }])->findOrFail($officer->officer_id);
-        //$officer->level()->attach($level_id);
+        // to get level_id
+        $officer = Officer::with(['user'])
+            ->findOrFail($officer->officer_id);
 
         $response = [
             'message' => 'Detail Data',

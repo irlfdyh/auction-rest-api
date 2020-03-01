@@ -16,14 +16,13 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'v1'], function(){
 
     // Society CRUD operation
-    Route::resource('user', 'SocietyController', [
-        // 'create', 'edit', 'delete' isn't need.
-        'except' => ['create', 'edit', 'destroy']
+    Route::resource('society', 'SocietyController', [
+        'only' => ['update', 'show', 'index']
     ]);
 
     // Officier CRUD operation
     Route::resource('officer', 'OfficerController', [
-        'except' => ['create', 'edit', 'destroy']
+        'only' => ['update', 'show', 'index']
     ]);
 
     // Stuff CRUD operation
@@ -46,6 +45,18 @@ Route::group(['prefix' => 'v1'], function(){
         'except' => ['create', 'edit']
     ]);
 
-    Route::post('auth', 'AuthController@register');
+    // Society following the auction
+    Route::resource('biding', 'BiddersController', [
+        'only' => ['store']
+    ]);
+});
+
+Route::group(['prefix' => 'auth'], function() {
+
+    // Creating new user
+    Route::post('register', 'AuthController@register');
+
+    // user sign in
     Route::post('signin', 'AuthController@signin');
+
 });

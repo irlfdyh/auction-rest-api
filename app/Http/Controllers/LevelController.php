@@ -18,7 +18,7 @@ class LevelController extends Controller
 
         $message = [
             'message' => 'All Level',
-            '$data' => $data
+            'data' => $data
         ];
 
         return response()->json(

@@ -22,6 +22,6 @@ class Stuff extends Model
      * Get relation from stuff category
      */
     public function category() {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

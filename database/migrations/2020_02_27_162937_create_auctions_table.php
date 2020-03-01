@@ -35,7 +35,7 @@ class CreateAuctionsTable extends Migration
                 ->on('societies');
 
             $table->date('auction_date');
-            $table->integer('final_price')->nullable();
+            $table->integer('current_price')->nullable();
             $table->enum('status', ['open', 'close']);
             $table->timestamps();
         });
