@@ -14,16 +14,18 @@ class OfficerController extends Controller
      */
     public function index()
     {
-        $officer = Officer::all();
+        $officer = Officer::with(['level'])->get();
 
         $response = [
             'message' => 'All Officer Data',
             'officier' => $officer
         ];
 
-        return response()->json(
-            $response, 200
-        );
+        // return response()->json(
+        //     $response, 200
+        // );
+
+        return $officer;
     }
 
     /**
@@ -34,13 +36,13 @@ class OfficerController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'officer_name' => 'required',
-            'username' => 'required',
-            'password' => 'required',
-            'level_id' => 'required',
-            'status' => 'required'
-        ]);
+        // $this->validate($request, [
+        //     'officer_name' => 'required',
+        //     'username' => 'required',
+        //     'password' => 'required',
+        //     'level_id' => 'required',
+        //     'status' => 'required'
+        // ]);
 
         $levelId = $request->level_id;
         $name = $request->officer_name;
@@ -82,7 +84,7 @@ class OfficerController extends Controller
      */
     public function show(Officer $officer)
     {
-        $officer = Officer::findOrFail($officer->officer_id);
+        $officer = Officer::with(['level'])->findOrFail($officer->officer_id);
         // $officer = Officer::with(['level'=>function($level){
         //     $level->with(['entity'])->get();
         // }])->findOrFail($officer->officer_id);

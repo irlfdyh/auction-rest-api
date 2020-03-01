@@ -15,7 +15,7 @@ class CreateLevelsTable extends Migration
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->bigIncrements('level_id');
-            $table->enum('level', ['administrator', 'officier']);
+            $table->enum('level', ['administrator', 'officer', 'society']);
             $table->timestamps();
         });
     }

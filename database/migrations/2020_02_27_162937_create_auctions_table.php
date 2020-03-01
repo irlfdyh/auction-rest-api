@@ -32,7 +32,7 @@ class CreateAuctionsTable extends Migration
             $table->unsignedBigInteger('society_id')->nullable();
             $table->foreign('society_id')
                 ->references('society_id')
-                ->on('societys');
+                ->on('societies');
 
             $table->date('auction_date');
             $table->integer('final_price')->nullable();

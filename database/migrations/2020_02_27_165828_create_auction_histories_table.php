@@ -32,7 +32,7 @@ class CreateAuctionHistoriesTable extends Migration
             $table->unsignedBigInteger('society_id');
             $table->foreign('society_id')
                 ->references('society_id')
-                ->on('societys');
+                ->on('societies');
 
             $table->integer('price_quote');
 

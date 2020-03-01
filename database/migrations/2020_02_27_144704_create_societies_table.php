@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOfficersTable extends Migration
+class CreateSocietiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateOfficersTable extends Migration
      */
     public function up()
     {
-        Schema::create('officers', function (Blueprint $table) {
-            $table->bigIncrements('officer_id', 11);
+        Schema::create('societies', function (Blueprint $table) {
+            $table->bigIncrements('society_id', 11);
 
             // user 
             $table->unsignedBigInteger('user_id');
@@ -22,7 +22,8 @@ class CreateOfficersTable extends Migration
                 ->references('user_id')
                 ->on('users');
 
-            $table->string('officer_name', 25);
+            $table->string('society_name', 25);
+            $table->string('phone', 25)->unique();
             $table->enum('status', ['active', 'deactive']);
             $table->timestamps();
         });
@@ -35,6 +36,6 @@ class CreateOfficersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('officers');
+        Schema::dropIfExists('societies');
     }
 }

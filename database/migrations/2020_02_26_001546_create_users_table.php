@@ -13,13 +13,24 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('societys', function (Blueprint $table) {
-            $table->bigIncrements('society_id', 11);
-            $table->string('user_name', 25);
+        Schema::create('users', function (Blueprint $table) {
+            $table->bigIncrements('user_id');
+
+            // level
+            $table->unsignedBigInteger('level_id');
+            $table->foreign('level_id')
+                ->references('level_id')
+                ->on('levels');
+
             $table->string('username', 25)->unique();
             $table->string('password');
-            $table->string('phone', 25)->unique();
-            $table->enum('status', ['active', 'deactive']);
+
+            // user token
+            $table->string('api_token', 80)
+                ->unique()
+                ->nullable()
+                ->default(null);
+
             $table->timestamps();
         });
     }
@@ -31,6 +42,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('societys');
+        Schema::dropIfExists('users');
     }
 }

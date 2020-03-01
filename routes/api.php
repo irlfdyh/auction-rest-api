@@ -45,4 +45,7 @@ Route::group(['prefix' => 'v1'], function(){
     Route::resource('auction', 'AuctionController', [
         'except' => ['create', 'edit']
     ]);
+
+    Route::post('auth', 'AuthController@register');
+    Route::post('signin', 'AuthController@signin');
 });
