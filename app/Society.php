@@ -10,14 +10,14 @@ class Society extends Model
     protected $primaryKey = 'society_id';
 
     public function auction() {
-        //$this->hasMany(Auction::class);
+        return $this->hasMany(Auction::class);
     }
 
     public function auctionHistory() {
-        //$this->hasMany(AuctionHistory::class);
+        return $this->hasMany(AuctionHistory::class);
     }
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

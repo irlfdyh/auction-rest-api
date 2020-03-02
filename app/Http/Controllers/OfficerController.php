@@ -14,65 +14,15 @@ class OfficerController extends Controller
      */
     public function index()
     {
-        $officer = Officer::with(['level'])->get();
+        $officer = Officer::all();
 
         $response = [
             'message' => 'All Officer Data',
             'officier' => $officer
         ];
 
-        // return response()->json(
-        //     $response, 200
-        // );
-
-        return $officer;
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // $this->validate($request, [
-        //     'officer_name' => 'required',
-        //     'username' => 'required',
-        //     'password' => 'required',
-        //     'level_id' => 'required',
-        //     'status' => 'required'
-        // ]);
-
-        $levelId = $request->level_id;
-        $name = $request->officer_name;
-        $username = $request->username;
-        $password = $request->password;
-        $status = $request->status;
-
-        $officer = new Officer([
-            'level_id' => $levelId,
-            'officer_name' => $name,
-            'username' => $username,
-            'password' => bcrypt($password),
-            'status' => $status
-        ]);
-
-        if ($officer->save()) {
-            $message = [
-                'message' => 'Data Created',
-                'officier' => $officer
-            ];
-            return response()->json(
-                $message, 201
-            );
-        }
-
-        $errorMessage = [
-            'message' => 'Error During Creation'
-        ];
         return response()->json(
-            $errorMessage, 404
+            $response, 200
         );
     }
 
@@ -107,44 +57,38 @@ class OfficerController extends Controller
      */
     public function update(Request $request, Officer $officer)
     {
+        // update officer data here
         $this->validate($request, [
             'officer_name' => 'required',
-            'username' => 'required',
-            'password' => 'required',
-            'level_id' => 'required',
             'status' => 'required'
         ]);
 
-        $levelId = $request->level_id;
         $name = $request->officer_name;
-        $username = $request->username;
-        $password = $request->password;
         $status = $request->status;
 
         $officerID = Officer::findOrFail($officer->officer_id);
 
-        if (!$officer->update()) {
+        $officer->update([
+            'officer_name' => $name,
+            'status' => $status
+        ]);
+
+        if ($officer->update()) {
+            $successMessage = [
+                'message' => 'Data Updated',
+                'officier' => $officer
+            ];
+    
+            return response()->json(
+                $successMessage, 200
+            );
+        } else {
             return response()->json([
                 'message' => 'Error During Update Data'
             ], 404);
         }
 
-        $officer->update([
-            'level_id' => $levelId,
-            'officier_name' => $name,
-            'username' => $username,
-            'password' => bcrypt($password),
-            'status' => $status
-        ]);
-
-        $successMessage = [
-            'message' => 'Data Updated',
-            'officier' => $officer
-        ];
-
-        return response()->json(
-            $successMessage, 200
-        );
+    
     }
 
 }

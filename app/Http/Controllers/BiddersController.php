@@ -65,7 +65,7 @@ class BiddersController extends Controller
                 'bid_price' => $bidPrice
             ]);
 
-            $update = $auctionCurrentPrice->update([
+            $update = Auction::with(['auction'])->update([
                 'final_price' => $bidPrice
             ]);
 

@@ -9,7 +9,7 @@ use Auth;
 
 class AuthController extends Controller
 {
-    public function register(Request $request) {
+    public function store(Request $request) {
 
         // creating user 
         $user = User::create([
@@ -81,10 +81,54 @@ class AuthController extends Controller
             ], 200);
 
         } else {
-            return response()->json([
-                'message' => 'Invalid Login'
-            ]);
+
+            // get valid username and password
+            $getUsername = User::where('username', $request->username)->first();
+            $getPassword = User::where('password', $request->password)->first();
+
+            if (!$getUsername) {
+                return response()->json([
+                    'message' => 'Username salah!'
+                ]);
+            } else if (!$getPassword) {
+                return response()->json([
+                    'message' => 'Password salah!'
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Login Bermasalah!'
+                ]);
+            }
         }
+    }
+
+    /**
+     * updating user data
+     */
+    public function update(Request $request, User $user) 
+    {
+
+        $user = User::findOrFail($user->user_id);
+        
+        $user->update([
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+            'level_id' => $request->level_id
+        ]);
+
+        if ($user->update()) {
+            $successMessage = [
+                'message' => 'Data Updated',
+                'data' => $user
+            ];
+            return response()->json(
+                $successMessage, 201
+            );
+        } else {
+            return response()->json([
+                'message' => 'Update Failed'
+            ], 404);
+        } 
     }
 
 }

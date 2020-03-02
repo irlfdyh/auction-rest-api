@@ -53,8 +53,10 @@ Route::group(['prefix' => 'v1'], function(){
 
 Route::group(['prefix' => 'auth'], function() {
 
-    // Creating new user
-    Route::post('register', 'AuthController@register');
+    // Create and Update user data
+    Route::resource('user', 'AuthController', [
+        'only' => ['store', 'update'] 
+    ]);
 
     // user sign in
     Route::post('signin', 'AuthController@signin');

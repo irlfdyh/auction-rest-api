@@ -17,10 +17,12 @@ class AuctionController extends Controller
     {
         //
         $auction = Auction::all();
+        $stuff = Auction::find(1)->stuff();
 
         $response = ([
             'message' => 'All Auction Data',
-            'auction' => $auction
+            'auction' => $auction,
+            'stuff' => $stuff
         ]);
 
 
@@ -114,7 +116,6 @@ class AuctionController extends Controller
         // status value
         $this->validate($request, [
             'status' => 'required',
-            'final_price' => 'required'
         ]);
 
         $auction = Auction::findOrFail($auction->auction_id);
@@ -122,7 +123,18 @@ class AuctionController extends Controller
         $status = $request->status;
         $finalPrice = $request->final_price;
 
-        if (!$auction->update()) {
+        $auction->update([
+            'status' => $status,
+            'final_price' => $finalPrice
+        ]);
+
+        if ($auction->update()) {
+            return response()->json([
+                'message' => 'Auction Finished',
+                'auction' => $auction
+            ], 201);
+           
+        } else {
             $errorMessage([
                 'message' => 'Error when closing the auction'
             ]);
@@ -132,15 +144,7 @@ class AuctionController extends Controller
             );
         }
 
-        $auction->update([
-            'status' => $status,
-            'final_price' => $finalPrice
-        ]);
-
-        return response()->json([
-            'message' => 'Auction Finished',
-            'auction' => $auction
-        ], 201);
+        
     }
 
     /**
