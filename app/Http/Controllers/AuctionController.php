@@ -121,19 +121,25 @@ class AuctionController extends Controller
         $auction = Auction::findOrFail($auction->auction_id);
 
         $status = $request->status;
-        $finalPrice = $request->final_price;
 
         $auction->update([
-            'status' => $status,
-            'final_price' => $finalPrice
+            'status' => $status
         ]);
 
         if ($auction->update()) {
+
+            // create auction history if the auction is finished
+            $auction->auctionHistory()->create([
+                'auction_id' => $auction->auction_id,
+                'stuff_id' => $auction->stuff_id,
+                'society_id' => 1 ,
+                'price_quote' => $auction->current_price
+            ]);
+
             return response()->json([
                 'message' => 'Auction Finished',
                 'auction' => $auction
             ], 201);
-           
         } else {
             $errorMessage([
                 'message' => 'Error when closing the auction'

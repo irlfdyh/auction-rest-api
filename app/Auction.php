@@ -39,4 +39,12 @@ class Auction extends Model
     public function bidders() {
         return $this->hasMany(Bidders::class, 'auction_id');
     }
+
+    /**
+     * this function is used for create auction history
+     * data based this auction
+     */
+    public function auctionHistory() {
+        return $this->hasOne(AuctionHistory::class, 'auction_id');
+    }
 }

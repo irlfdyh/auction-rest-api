@@ -22,6 +22,10 @@ class User extends Authenticatable
      */
     protected $hidden = ['password'];
 
+    /**
+     * this function is used for post officer
+     * or society profile data
+     */
     public function officer() {
         return $this->hasOne(Officer::class, 'user_id');
     }
