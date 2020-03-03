@@ -35,7 +35,7 @@ class SocietyController extends Controller
     public function show(Society $society)
     {
         // showing society specific society with user data
-        $society = Society::with(['user'])
+        $society = Society::with(['user', 'auctionHistory'])
             ->findOrFail($society->society_id);
 
         $response = [

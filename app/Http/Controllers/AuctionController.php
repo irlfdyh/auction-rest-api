@@ -15,14 +15,12 @@ class AuctionController extends Controller
      */
     public function index()
     {
-        //
-        $auction = Auction::all();
-        $stuff = Auction::find(1)->stuff();
+        // getting all auction data with stuff detail
+        $auction = Auction::with(['stuff'])->get();
 
         $response = ([
             'message' => 'All Auction Data',
-            'auction' => $auction,
-            'stuff' => $stuff
+            'auction' => $auction
         ]);
 
 
@@ -132,7 +130,7 @@ class AuctionController extends Controller
             $auction->auctionHistory()->create([
                 'auction_id' => $auction->auction_id,
                 'stuff_id' => $auction->stuff_id,
-                'society_id' => 1 ,
+                'society_id' => $auction->society_id ,
                 'price_quote' => $auction->current_price
             ]);
 

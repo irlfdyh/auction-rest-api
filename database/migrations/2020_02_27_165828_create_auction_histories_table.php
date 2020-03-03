@@ -28,7 +28,8 @@ class CreateAuctionHistoriesTable extends Migration
                 ->references('stuff_id')
                 ->on('stuffs');
 
-            //society_id foreign key
+            //society_id foreign key 
+            // or we can called this winner id
             $table->unsignedBigInteger('society_id');
             $table->foreign('society_id')
                 ->references('society_id')

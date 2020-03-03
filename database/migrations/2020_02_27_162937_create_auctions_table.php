@@ -28,7 +28,8 @@ class CreateAuctionsTable extends Migration
                 ->references('officer_id')
                 ->on('officers');
 
-            // society_id foreign key    
+            // society_id foreign key 
+            // or current higher bid price from society   
             $table->unsignedBigInteger('society_id')->nullable();
             $table->foreign('society_id')
                 ->references('society_id')

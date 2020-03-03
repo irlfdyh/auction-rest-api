@@ -13,8 +13,11 @@ class Society extends Model
         return $this->hasMany(Auction::class);
     }
 
+    /**
+     * getting society auction history
+     */
     public function auctionHistory() {
-        return $this->hasMany(AuctionHistory::class);
+        return $this->hasMany(Bidders::class, 'society_id');
     }
 
     public function user() {
