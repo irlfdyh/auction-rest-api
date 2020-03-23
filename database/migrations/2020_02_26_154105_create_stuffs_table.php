@@ -24,6 +24,7 @@ class CreateStuffsTable extends Migration
             $table->string('stuff_name', 25);
             $table->integer('started_price');
             $table->text('description');
+            $table->enum('status', ['disimpan', 'dilelang']);
             $table->date('date');
             $table->timestamps();
         });

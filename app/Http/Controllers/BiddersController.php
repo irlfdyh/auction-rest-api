@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 
 class BiddersController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('APIToken');
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -62,7 +67,8 @@ class BiddersController extends Controller
                         'bid_price' => $bidPrice
                     ]);
         
-                    $update = Auction::with(['auction'])->update([
+                    // updating current auction data
+                    $auction = Auction::find($auctionId)->update([
                         'current_price' => $bidPrice,
                         // society id is need to get the user higher bid
                         // at some auction
@@ -72,8 +78,7 @@ class BiddersController extends Controller
                     if ($bidders->save()) {
                         $successMessage = [
                             'message' => 'Berhasil mengikuti pelelangan',
-                            'data' => $bidders,
-                            'new' => $update
+                            'data' => $bidders
                         ];
                         return response()->json(
                             $successMessage, 201

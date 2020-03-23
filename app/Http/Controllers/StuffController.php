@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class StuffController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('APIToken')->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *

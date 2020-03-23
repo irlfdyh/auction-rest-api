@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class AuctionController extends Controller
 {
+    public function __construct() {
+        $this->middleware('APIToken')->only(['store', 'update']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -48,10 +52,13 @@ class AuctionController extends Controller
         $officerId = $request->officer_id;
         $userId = $request->society_id;
         $auctionDate = $request->auction_date;
-        $currentPrice = $request->current_price;
         $status = $request->status;
 
+        // Getting current stuff price
         $currentPrice = Stuff::find($stuffId)->started_price;
+
+        // Getting current stuff status
+        $stuffStatus = Stuff::find($stuffId)->status;
 
         $auction = new Auction([
             'stuff_id' => $stuffId,
@@ -62,23 +69,35 @@ class AuctionController extends Controller
             'status' => $status
         ]);
 
-        if ($auction->save()) {
-            $successMessage = [
-                'message' => 'Auction Started',
-                'auction' => $auction
-            ];
-            return response()->json(
-                $successMessage, 201
-            );
+        if ($stuffStatus == 'dilelang') {
+            return response()->json([
+                'message' => 'Barang sudah dilelang sebelumnya.'
+            ], 200);
+        } else {
+            if ($auction->save()) {
+
+                // updating current stuff status
+                $update = Stuff::find($stuffId)->update([
+                    'status' => 'dilelang'
+                ]);
+    
+                $successMessage = [
+                    'message' => 'Auction Started',
+                    'auction' => $auction
+                ];
+                return response()->json(
+                    $successMessage, 201
+                );
+            } else {
+                $errorMessage = [
+                    'message' => 'Error during starting the auction'
+                ];
+        
+                return response()->json(
+                    $errorMessage, 404
+                );
+            }
         }
-
-        $errorMessage = [
-            'message' => 'Error during starting the auction'
-        ];
-
-        return response()->json(
-            $errorMessage, 404
-        );
 
     }
 

@@ -24,4 +24,13 @@ class Stuff extends Model
     public function category() {
         return $this->belongsTo(Category::class, 'category_id');
     }
+
+    /**
+     * This stuff only can Opened for the Auction
+     * just once.
+     */
+    public function auction() {
+        return $this->hasOne(Auction::class, 'stuff_id');
+    }
+
 }

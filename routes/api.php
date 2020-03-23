@@ -35,11 +35,6 @@ Route::group(['prefix' => 'v1'], function(){
         'except' => ['create', 'edit']
     ]);
 
-    // Level Test
-    Route::resource('level', 'LevelController', [
-        'only' => ['index']
-    ]);
-
     // Auction
     Route::resource('auction', 'AuctionController', [
         'except' => ['create', 'edit']
