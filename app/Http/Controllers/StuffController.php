@@ -53,9 +53,16 @@ class StuffController extends Controller
         $description = $request->description;
         $date = $request->date;
 
+        if ($request->hasFile('image')) {
+            $stuffImage = $request->file('image')->storeAs(
+                'stuff', $request->image->getClientOriginalName());
+            $url = "192.168.100.9:8000/storage/$stuffImage";
+        }
+
         // create new stuff object for gave data was created before
         $stuff = new Stuff([
             'category_id' => $categoryId,
+            'image_url' => $url,
             'stuff_name' => $name,
             'started_price' => $price,
             'description' => $description,

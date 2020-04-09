@@ -7,11 +7,7 @@ use Illuminate\Http\Request;
 
 class OfficerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         $officer = Officer::all();
@@ -26,12 +22,6 @@ class OfficerController extends Controller
         );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Officer  $officer
-     * @return \Illuminate\Http\Response
-     */
     public function show(Officer $officer)
     {
         // to get level_id
@@ -48,13 +38,6 @@ class OfficerController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Officer  $officer
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Officer $officer)
     {
         // update officer data here
@@ -87,8 +70,5 @@ class OfficerController extends Controller
                 'message' => 'Error During Update Data'
             ], 404);
         }
-
-    
     }
-
 }

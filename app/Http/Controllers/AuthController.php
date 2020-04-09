@@ -28,7 +28,16 @@ class AuthController extends Controller
                 'officer_name' => $request->officer_name,
                 'status' => $request->status
             ]);
+
+            // message object
             $success['officer_name'] = $officer->officer_name;
+            $success['level_id'] = $user->level_id;
+            $success['token'] = $user->api_token;
+
+            return response()->json([
+                'message' => 'Berhasil menambah petugas baru',
+                'user' => $success
+            ]);
         } else if ($request->level_id == 3) {
             $society = $user->society()->create([
                 'user_id' => $user->user_id,
@@ -36,17 +45,17 @@ class AuthController extends Controller
                 'phone' => $request->phone,
                 'status' => $request->status
             ]);
+
             $success['society_name'] = $society->society_name; 
+            $success['level_id'] = $user->level_id;
+            $success['token'] = $user->api_token;
+
+            return response()->json([
+                'message' => 'Berhasil Mendaftar',
+                'user' => $success
+            ]);
         }
-
-        $success['level_id'] = $user->level_id;
-        $success['token'] = $user->api_token;
-
-        return response()->json([
-            'message' => 'Data Created',
-            'user' => $success
-        ]);
-
+        
     }
 
     public function signin(Request $request) {
@@ -68,35 +77,40 @@ class AuthController extends Controller
             $society = User::find($userId)->society;
 
             if ($levelId == 1 || $levelId == 2) {
-                $userData['data'] = $officer;
+                return response()->json([
+                    'message' => 'Login berhasil',
+                    'level_id' => $levelId,
+                    'token' => $token,
+                    'user' => $officer
+                ], 200);
             } else if ($levelId == 3) {
-                $userData['data'] = $society;
+                return response()->json([
+                    'message' => 'Login berhasil',
+                    'level_id' => $levelId,
+                    'token' => $token,
+                    'user' => $society
+                ], 200);
             }
-
-            return response()->json([
-                'message' => 'Logged In',
-                'level_id' => $levelId,
-                'token' => $token,
-                'user' => $userData
-            ], 200);
 
         } else {
 
             // get valid username and password
             $getUsername = User::where('username', $request->username)->first();
             $getPassword = User::where('password', $request->password)->first();
+            // get username from request
+            $usernameInput = $request->username;
 
             if (!$getUsername) {
                 return response()->json([
-                    'message' => 'Username salah!'
+                    'message' => 'Username tidak ditemukan'
                 ]);
             } else if (!$getPassword) {
                 return response()->json([
-                    'message' => 'Password salah!'
+                    'message' => "Password tidak sesuai dengan $usernameInput"
                 ]);
             } else {
                 return response()->json([
-                    'message' => 'Login Bermasalah!'
+                    'message' => 'Ada masalah saat login'
                 ]);
             }
         }
@@ -118,7 +132,7 @@ class AuthController extends Controller
 
         if ($user->update()) {
             $successMessage = [
-                'message' => 'Data Updated',
+                'message' => 'Data berhasil di ubah',
                 'data' => $user
             ];
             return response()->json(
@@ -126,7 +140,7 @@ class AuthController extends Controller
             );
         } else {
             return response()->json([
-                'message' => 'Update Failed'
+                'message' => 'Gagal mengubah data'
             ], 404);
         } 
     }

@@ -13,9 +13,9 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['category_name' => 'Hobi', 'category_description' => 'deskripsi tentang hobi'],
-            ['category_name' => 'Fashion', 'category_description' => 'deskripsi tentang fashion'],
-            ['category_name' => 'Elektronik', 'category_description' => 'deskripsi tentang elektronik'],
+            ['category_name' => 'Hobi', 'category_description' => 'deskripsi tentang hobi', 'image_url' => 'https://i.ebayimg.com/images/g/oGcAAOSwz~pZ9b9p/s-l1600.jpg'],
+            ['category_name' => 'Fashion', 'category_description' => 'deskripsi tentang fashion', 'image_url' => 'https://i.ebayimg.com/images/g/HrAAAOSwFC1daRBv/s-l1600.jpg'],
+            ['category_name' => 'Elektronik', 'category_description' => 'deskripsi tentang elektronik', 'image_url' => 'https://i.ebayimg.com/images/g/rfYAAOSw7xtePuDC/s-l1600.jpg'],
         ];
 
         foreach ($categories as $category) {

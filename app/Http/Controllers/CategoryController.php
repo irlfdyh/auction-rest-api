@@ -48,10 +48,18 @@ class CategoryController extends Controller
 
         $categoryName = $request->category_name;
         $categoryDescription = $request->category_description;
+        $categoryImage = $request->image;
+
+        if ($request->hasFile('image')) {
+            $categoryImage = $request->file('image')->storeAs(
+                'category', $request->image->getClientOriginalName());
+            $url = "192.168.100.9:8000/storage/$categoryImage";
+        }
 
         $category = new Category([
             'category_name' => $categoryName,
-            'category_description' => $categoryDescription
+            'category_description' => $categoryDescription,
+            'image_url' => $url
         ]);
 
         if ($category->save()) {
@@ -145,3 +153,16 @@ class CategoryController extends Controller
     }
     
 }
+
+
+// if ($request->hasFile('photo')) {
+//     $photo = $request->file('photo')->store('/creations');
+
+//     $creation = Creation::create([
+//     'category_id'=>$request->category_id,
+//     'creator_id'=>$creator->id,
+//     'name'=>$request->name,
+//     'description'=>$request->description,
+//     'photo'=>$photo
+// ]);
+// }
