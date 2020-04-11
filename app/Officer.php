@@ -20,4 +20,11 @@ class Officer extends Model
     public function user() {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+     * To get the stuff that created by this officer.
+     */
+    public function stuffs() {
+        return $this->hasMany(Stuff::class, 'officer_id');
+    }
 }

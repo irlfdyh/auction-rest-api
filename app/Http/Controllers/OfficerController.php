@@ -24,8 +24,9 @@ class OfficerController extends Controller
 
     public function show(Officer $officer)
     {
-        // to get level_id
-        $officer = Officer::with(['user'])
+        // to get level_id, and get what stuff has been created
+        // by this officer.
+        $officer = Officer::with(['user', 'stuffs'])
             ->findOrFail($officer->officer_id);
 
         $response = [

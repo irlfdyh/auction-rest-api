@@ -20,6 +20,11 @@ class CreateStuffsTable extends Migration
             $table->foreign('category_id')
                 ->references('category_id')
                 ->on('categories');
+
+            $table->unsignedBigInteger('officer_id');
+            $table->foreign('officer_id')
+                ->references('officer_id')
+                ->on('officers');
                 
             $table->string('stuff_name', 25);
             $table->integer('started_price');

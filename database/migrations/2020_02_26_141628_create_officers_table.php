@@ -23,7 +23,7 @@ class CreateOfficersTable extends Migration
                 ->on('users');
 
             $table->string('officer_name', 25);
-            $table->enum('status', ['active', 'deactive']);
+            $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
         });
     }

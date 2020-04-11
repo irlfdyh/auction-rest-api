@@ -48,6 +48,7 @@ class StuffController extends Controller
 
         // get data input
         $categoryId = $request->category_id;
+        $officerId = $request->officer_id;
         $name = $request->stuff_name;
         $price = $request->started_price;
         $description = $request->description;
@@ -62,6 +63,7 @@ class StuffController extends Controller
         // create new stuff object for gave data was created before
         $stuff = new Stuff([
             'category_id' => $categoryId,
+            'officer_id' => $officerId,
             'image_url' => $url,
             'stuff_name' => $name,
             'started_price' => $price,
@@ -94,7 +96,11 @@ class StuffController extends Controller
      */
     public function show(Stuff $stuff)
     {
-        $stuff = Stuff::with(['category'])->findOrFail($stuff->stuff_id);
+        // Get stuff data with category and officer who 
+        // create this stuff.
+        $stuff = Stuff::with([
+            'category', 'officer'
+        ])->findOrFail($stuff->stuff_id);
 
         $response = [
             'message' => 'Detail Data',
