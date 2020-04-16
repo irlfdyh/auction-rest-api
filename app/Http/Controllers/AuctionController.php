@@ -109,7 +109,8 @@ class AuctionController extends Controller
      */
     public function show(Auction $auction)
     {
-        $auction = Auction::with(['stuff', 'bidders'])->findOrFail($auction->auction_id);
+        $auction = Auction::with(['stuff', 'bidders'])
+            ->findOrFail($auction->auction_id);
         $response = [
             'message' => 'Detail Data',
             'auction' => $auction

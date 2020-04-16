@@ -23,14 +23,14 @@ class Auction extends Model
      * one stuff
      */
     public function stuff() {
-        return $this->hasOne(Stuff::class, 'stuff_id');
+        return $this->belongsTo(Stuff::class, 'stuff_id');
     }
 
     /**
      * the auction only can start with one officer
      */
     public function officer() {
-        return $this->hasOne(Officer::class);
+        return $this->belongsTo(Officer::class);
     }
 
     /**

@@ -44,6 +44,10 @@ Route::group(['prefix' => 'v1'], function(){
     Route::resource('biding', 'BiddersController', [
         'only' => ['store']
     ]);
+
+    Route::resource('auctionhistory', 'AuctionHistoryController', [
+        'only' => ['show', 'index']
+    ]);
 });
 
 Route::group(['prefix' => 'auth'], function() {

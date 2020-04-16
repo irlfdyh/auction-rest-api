@@ -10,14 +10,14 @@ class AuctionHistory extends Model
     protected $primaryKey = 'history_id';
 
     public function auction() {
-        return $this->hasOne(Auction::class);
+        return $this->belongsTo(Auction::class, 'auction_id');
     }
 
     public function stuff() {
-        return $this->hasOne(Stuff::class);
+        return $this->belongsTo(Stuff::class, 'stuff_id');
     }
 
-    public function societys() {
-        return $this->belongsToMany(Society::class);
+    public function society() {
+        return $this->belongsTo(Society::class, 'society_id');
     } 
 }
