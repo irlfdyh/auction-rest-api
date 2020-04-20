@@ -16,6 +16,6 @@ class Category extends Model
      * Get the stuff that use this category
      */
     public function stuff() {
-        return $this->hasMany(Stuff::class);
+        return $this->hasMany(Stuff::class, 'category_id');
     }
 }

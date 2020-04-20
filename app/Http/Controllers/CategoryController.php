@@ -86,7 +86,16 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $category = Category::with(['stuff'])->findOrFail($category->category_id);
+
+        $response = [
+            'message' => 'Detail Kategori',
+            'category' => $category
+        ];
+
+        return response()->json(
+            $response, 200
+        );
     }
 
     /**
@@ -153,16 +162,3 @@ class CategoryController extends Controller
     }
     
 }
-
-
-// if ($request->hasFile('photo')) {
-//     $photo = $request->file('photo')->store('/creations');
-
-//     $creation = Creation::create([
-//     'category_id'=>$request->category_id,
-//     'creator_id'=>$creator->id,
-//     'name'=>$request->name,
-//     'description'=>$request->description,
-//     'photo'=>$photo
-// ]);
-// }
